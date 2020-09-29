@@ -15,4 +15,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/search', function () {
+    return view('search');
+});
+
 Route::get('/city', 'CityController@getCityData');
