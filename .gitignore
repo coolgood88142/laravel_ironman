@@ -1,0 +1,38 @@
+# ide
+/.idea
+_ide_helper*.php
+.phpstorm.meta.php
+
+# vendor
+/vendor
+/node_modules
+/public/hot
+
+# assets
+/public/css/*
+/public/js/*
+/public/fonts/*
+/public/mix-manifest.json
+
+# storage
+/public/storage
+/storage/*.key
+
+# config
+.env
+.env.backup
+Homestead.json
+Homestead.yaml
+
+# code
+/public/robots.txt
+.phpunit.result.cache
+.phplint-cache
+
+# log
+npm-debug.log
+yarn-error.log
+
+# other
+.DS_Store
+Thumbs.db
