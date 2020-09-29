@@ -14,7 +14,6 @@
         "bootstrap": "^4.0.0",
         "bootstrap-sass": "^3.4.1",
         "cross-env": "^7.0",
-        "jenssegers/mongodb": "^3.6",
         "laravel-mix": "^5.0.1",
         "lodash": "^4.17.19",
         "resolve-url-loader": "^3.1.0",
