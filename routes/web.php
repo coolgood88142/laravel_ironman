@@ -19,6 +19,10 @@ Route::get('/card', function () {
     return view('card');
 });
 
+Route::get('/route', function () {
+    return view('route');
+});
+
 Route::get('/search', function () {
     return view('search');
 });
