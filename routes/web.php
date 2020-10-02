@@ -28,3 +28,5 @@ Route::get('/search', function () {
 });
 
 Route::get('/city', 'CityController@getCityData');
+
+Route::get('/keyword', 'KeyWordController@getKeyWordData');
