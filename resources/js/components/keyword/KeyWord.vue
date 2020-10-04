@@ -6,16 +6,18 @@
 				<th>序號</th>
 				<th>英文名稱</th>
 				<th>中文名稱</th>
+				<th>建立日期</th>
 				<th>編輯設定</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr v-for="(keywords, index) in keyWordsData" :key="index">
-				<td><input type="checkbox" name="id[]" :value="keywords.id" v-model="checkedKeywords"></td>
+			<tr v-for="(keyword, index) in keyWordData" :key="index">
+				<td><input type="checkbox" name="id[]" :value="keyword._id" v-model="keywordID"></td>
 				<td>{{ index }}</td>
-				<td>{{ keywords.english_name }}</td>
-				<td>{{ keywords.chinese_name }}</td>
-				<td><input type="button" class="btn btn-primary" value="編輯" v-on:click="editUserData(user.id)" /></td>
+				<td>{{ keyword.english_name }}</td>
+				<td>{{ keyword.chinese_name }}</td>
+				<td>{{ keyword.created_at.substring(0,10) }}</td>
+				<td><input type="button" class="btn btn-primary" value="編輯" @click="$emit('update-keyword', keyword._id, keyword.english_name, keyword.chinese_name)" /></td>
 			</tr>
 		</tbody>
 	</table>
@@ -24,14 +26,19 @@
 <script>
 export default {
 	props: {
-		keyWordsData: {
+		keyWordData: {
 			type:Array
 		}
 	},
 	data() {
 		return {
-			districts: [],
+			keywordID: []
 		}
 	},
+	watch:{
+		keywordID(newVal){
+			this.$emit('send-keyword-id', newVal)
+		}
+	}
 }
 </script>

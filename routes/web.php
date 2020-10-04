@@ -29,4 +29,14 @@ Route::get('/search', function () {
 
 Route::get('/city', 'CityController@getCityData');
 
-Route::get('/keyword', 'KeyWordController@getKeyWordData');
+Route::get('/keyword', 'KeyWordController@getKeyWordView')->name('getKeyWordView');
+
+Route::get('/getKeyWordData','KeyWordController@index')->name('getKeyWordData');
+
+Route::get('/updateKeyWord', 'KeyWordController@updateKeyWordData');
+
+Route::post('/addKeyWord', 'KeyWordController@addKeyWordData')->name('addKeyWord');
+
+Route::post('/updateKeyWord', 'KeyWordController@updateKeyWordData')->name('updateKeyWord');
+
+Route::post('/deleteKeyWord', 'KeyWordController@deleteKeyWordData')->name('deleteKeyWord');

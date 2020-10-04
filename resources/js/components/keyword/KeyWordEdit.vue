@@ -3,7 +3,7 @@
 		<div class="modal-mask">
 			<div class="modal-wrapper">
 				<div class="modal-container">
-                    <form :action="action" method="POST" class="sidebar-form">
+                    <form action="" method="POST" class="sidebar-form">
                         <div class="modal-header">
                             <slot name="header">
                                 <h3>{{ title }}</h3>
@@ -11,17 +11,13 @@
                         </div>
                         <div class="modal-body">
                             <slot name="body">
-                                <div class="form-group row">
-                                    <label for="inputPassword" class="col-sm-2 col-form-label">英文名稱</label>
-                                    <div class="col-sm-10">
-                                    <input type="password" class="form-control" id="inputPassword" :value="enName">
-                                    </div>
+                                <div class="form-group">
+                                    <label for="inputEnglishName">英文名稱</label>
+                                    <input type="text" class="form-control" id="inputEnglishName" v-model="enName">
                                 </div>
-                                <div class="form-group row">
-                                    <label for="inputPassword" class="col-sm-2 col-form-label">中文名稱</label>
-                                    <div class="col-sm-10">
-                                    <input type="password" class="form-control" id="inputPassword" :value="chName">
-                                    </div>
+                                <div class="form-group">
+                                    <label for="inputChineseName">中文名稱</label>
+                                    <input type="text" class="form-control" id="inputChineseName" v-model="chName">
                                 </div>
                             </slot>
                         </div>
@@ -32,8 +28,8 @@
                                             value="取消" @click="$emit('close')">
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input type="submit" class="btn btn-primary" id="save" name="save"
-                                            value="儲存" @click="checkKeyWordsData()">
+                                    <input type="button" class="btn btn-primary" id="save" name="save"
+                                            value="儲存" @click="checkKeyWord()">
                                     </div>
                             </slot>
                         </div>
@@ -51,42 +47,63 @@
 </style>
 
 <script>
+import swal from "sweetalert"
+
 export default {
     props: {
         title: {
             type:String
         },
-		englishName: {
-			type:String
+		params: {
+			type:Object
         },
-        chineseName: {
-			type:String
-		},
+        urlData: {
+            type:Object
+        },
+        isAdd: {
+            type:Boolean
+        }
 	},
 	data() {
 		return {
-			enName: this.englishName,
-			chName: this.chineseName,
+			enName: this.params.enName,
+            chName: this.params.chName,
+            messageText: '',
 		}
 	},
 	methods: {
-		checkKeyWordsData() {
+		checkKeyWord() {
             let enName = this.enName
             let chName = this.chName
-            let message = ''
+            let url = this.isAdd ? this.urlData.add : this.urlData.update
+            this.messageText = ''
 
-			if (enName === "" && chName === "") {
-				message = "英文或中文名稱不能為空"
-			} else if (enName === "") {
-				message = "英文名稱不能為空"
-			} else if (chName === "") {
-				message = "中文名稱不能為空"
+			if (enName === '' && chName === '') {
+                this.messageText = "英文或中文名稱不能為空"
+			} else if (enName === '') {
+                this.messageText = "英文名稱不能為空"
+            } else if(/[\u4e00-\u9fa5]/.test(enName)) {
+                this.messageText = "英文名稱不能輸入中文"
+			} else if (chName === '') {
+                this.messageText = "中文名稱不能為空"
+            } else if(/[A-Za-z]/.test(chName)) {
+                this.messageText = "中文名稱不能輸入英文"
+            } else {
+                let params = {
+                    'english_name' : enName,
+                    'chinese_name' : chName,
+                }
+
+                if (!this.isAdd) {
+                    params['id'] = this.params.id
+                }
+                this.$emit('send-data', url, params)
             }
-            
-            if(message != ''){
-                this.$emit('')
+
+            if (this.messageText != '') {
+                this.$emit('is-show-message', true, this.messageText)
             }
-		},
+        }
 	},
 }
 </script>
