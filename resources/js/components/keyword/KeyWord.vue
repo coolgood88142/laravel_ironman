@@ -17,7 +17,7 @@
 				<td>{{ keyword.english_name }}</td>
 				<td>{{ keyword.chinese_name }}</td>
 				<td>{{ keyword.created_at.substring(0,10) }}</td>
-				<td><input type="button" class="btn btn-primary" value="編輯" @click="$emit('update-keyword', keyword._id, keyword.english_name, keyword.chinese_name)" /></td>
+				<td><input type="button" class="btn btn-primary" value="編輯" @click="$emit('update-keyword', keyword._id, keyword.english_name, keyword.chinese_name, index)" /></td>
 			</tr>
 		</tbody>
 	</table>

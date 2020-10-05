@@ -16,7 +16,9 @@ let app = new Vue({
         showEdit: false,
         isAdd: false,
         keyword: [],
-        urlData: {},
+        urlAdd: '',
+        urlUpdate: '',
+        urlDelete: '',
         keyWordId: [],
         pagination: {},
         getPage:1,
@@ -36,9 +38,9 @@ let app = new Vue({
         getKeyWordData(page){
             axios.get('/getKeyWordData?page=' + page).then(response => {
                 this.keyword = response.data.keyword,
-                this.urlData['add'] = response.data.add,
-                this.urlData['update'] = response.data.update,
-                this.urlData['delete'] = response.data.delete,
+                this.urlAdd = response.data.add,
+                this.urlUpdate = response.data.update,
+                this.urlDelete = response.data.delete,
                 this.pagination = response.data.pagination
             }).catch((error) => {
                 //顯示請求資料失敗的錯誤訊息
@@ -64,43 +66,44 @@ let app = new Vue({
                 'chName': ''
             }
         },
-        updateKeyWord(id, enName, chName){
+        updateKeyWord(id, enName, chName, index){
             this.editTitle = '更新關鍵字'
             this.showEdit = true
             this.params = {
                 'id': id,
                 'enName': enName,
-                'chName': chName
+                'chName': chName,
+                'index' : index
             }
-            
         },
         getKeyWordId(id){
             this.keyWordId = id
         },
-        deleteKeyWord(url){
+        deleteKeyWord(){
             if (this.keyWordId.length > 0) {
                 let params = {
                     id: this.keyWordId
                 }
-                this.sendData(url, params)
+                if (this.urlDelete  != '') {
+                    axios.post(this.urlDelete, params).then((response) => {
+                        let isSuccess = response.data.status == 'success' ? true : false
+                        this.isShowMessage(!isSuccess, response.data.message)
+                    }).catch((error) => {
+                        if (error.response) {
+                            console.log(error.response.data);
+                            console.log(error.response.status);
+                            console.log(error.response.headers);
+                        } else {
+                            console.log('Error', error.message);
+                        }
+                        this.isShowMessage(true, '發生意外錯誤!')
+                    })
+                } else {
+                    this.isShowMessage(true, '發生意外錯誤!')
+                }
             } else {
                 this.isShowMessage(true, '至少勾選一個關鍵字')
             }
-        },
-        sendData(url, params){
-            axios.post(url, params).then((response) => {
-                let isSuccess = response.data.status == 'success' ? true : false
-                this.isShowMessage(!isSuccess, response.data.message)
-            }).catch((error) => {
-                if (error.response) {
-                    console.log(error.response.data);
-                    console.log(error.response.status);
-                    console.log(error.response.headers);
-                } else {
-                    console.log('Error', error.message);
-                }
-                this.isShowMessage(true, '發生意外錯誤!')
-            })
         },
         isShowMessage(isError, message){
             swal({
@@ -109,8 +112,10 @@ let app = new Vue({
                 icon: !isError ? 'success':'error',
                 showCloseButton: true
             }).then(function() {
-                if(!isError){
+                if (!isError && isAdd){
                     location.reload()
+                } else if (isAdd){
+
                 }
             })
         }

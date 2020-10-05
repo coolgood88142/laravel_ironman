@@ -3,37 +3,37 @@
 		<div class="modal-mask">
 			<div class="modal-wrapper">
 				<div class="modal-container">
-                    <form action="" method="POST" class="sidebar-form">
-                        <div class="modal-header">
-                            <slot name="header">
-                                <h3>{{ title }}</h3>
-                            </slot>
-                        </div>
-                        <div class="modal-body">
-                            <slot name="body">
-                                <div class="form-group">
-                                    <label for="inputEnglishName">英文名稱</label>
-                                    <input type="text" class="form-control" id="inputEnglishName" v-model="enName">
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputChineseName">中文名稱</label>
-                                    <input type="text" class="form-control" id="inputChineseName" v-model="chName">
-                                </div>
-                            </slot>
-                        </div>
-                        <div class="modal-footer">
-                            <slot name="footer">
-                                <div class="form-check form-check-inline">
-                                    <input type="button" class="btn btn-primary" id="cancel" name="cancel"
-                                            value="取消" @click="$emit('close')">
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input type="button" class="btn btn-primary" id="save" name="save"
-                                            value="儲存" @click="checkKeyWord()">
-                                    </div>
-                            </slot>
-                        </div>
-                    </form>
+					<form action="" method="POST" class="sidebar-form">
+						<div class="modal-header">
+							<slot name="header">
+								<h3>{{ title }}</h3>
+							</slot>
+						</div>
+						<div class="modal-body">
+							<slot name="body">
+								<div class="form-group">
+									<label for="inputEnglishName">英文名稱</label>
+									<input type="text" class="form-control" id="inputEnglishName" v-model="enName">
+								</div>
+								<div class="form-group">
+									<label for="inputChineseName">中文名稱</label>
+									<input type="text" class="form-control" id="inputChineseName" v-model="chName">
+								</div>
+							</slot>
+						</div>
+						<div class="modal-footer">
+							<slot name="footer">
+								<div class="form-check form-check-inline">
+									<input type="button" class="btn btn-primary" id="cancel" name="cancel"
+											value="取消" @click="$emit('close')">
+								</div>
+								<div class="form-check form-check-inline">
+									<input type="button" class="btn btn-primary" id="save" name="save"
+											value="儲存" @click="addKeyWord()">
+									</div>
+							</slot>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -50,60 +50,86 @@
 import swal from "sweetalert"
 
 export default {
-    props: {
-        title: {
-            type:String
-        },
+	props: {
+		title: {
+			type:String
+		},
 		params: {
 			type:Object
-        },
-        urlData: {
-            type:Object
-        },
-        isAdd: {
-            type:Boolean
-        }
+		},
+		urlAdd: {
+			type:String
+		},
+		urlUpdate: {
+			type:String
+		},
+		isAdd: {
+			type:Boolean
+		}
 	},
 	data() {
 		return {
 			enName: this.params.enName,
-            chName: this.params.chName,
-            messageText: '',
+			chName: this.params.chName,
+			messageText: '',
 		}
 	},
 	methods: {
-		checkKeyWord() {
-            let enName = this.enName
-            let chName = this.chName
-            let url = this.isAdd ? this.urlData.add : this.urlData.update
-            this.messageText = ''
-
+		checkKeyWord(enName, chName) {
+			let isError = true
+			this.messageText = ''
+			
 			if (enName === '' && chName === '') {
-                this.messageText = "英文或中文名稱不能為空"
+				this.messageText = "英文或中文名稱不能為空"
 			} else if (enName === '') {
-                this.messageText = "英文名稱不能為空"
-            } else if(/[\u4e00-\u9fa5]/.test(enName)) {
-                this.messageText = "英文名稱不能輸入中文"
+				this.messageText = "英文名稱不能為空"
+			} else if(/[\u4e00-\u9fa5]/.test(enName)) {
+				this.messageText = "英文名稱不能輸入中文"
 			} else if (chName === '') {
-                this.messageText = "中文名稱不能為空"
-            } else if(/[A-Za-z]/.test(chName)) {
-                this.messageText = "中文名稱不能輸入英文"
-            } else {
-                let params = {
-                    'english_name' : enName,
-                    'chinese_name' : chName,
-                }
+				this.messageText = "中文名稱不能為空"
+			} else if(/[A-Za-z]/.test(chName)) {
+				this.messageText = "中文名稱不能輸入英文"
+			} 
 
-                if (!this.isAdd) {
-                    params['id'] = this.params.id
-                }
-                this.$emit('send-data', url, params)
-            }
+			if (this.messageText != '') {
+				this.$emit('is-show-message', true, this.messageText)
+			} else {
+				isError = false
+			}
+			return false
+		},
+		addKeyWord(){
+			let enName = this.enName
+			let chName = this.chName
+			let url = this.isAdd ? this.urlAdd : this.urlUpdate
+			let isError = this.isErrorKeyWord(enName, chName)
 
-            if (this.messageText != '') {
-                this.$emit('is-show-message', true, this.messageText)
-            }
-        }
+			if (!isError) {
+				let params = {
+					'english_name' : enName,
+					'chinese_name' : chName,
+				}
+
+				if (!this.isAdd) {
+					params['id'] = this.params.id
+				}
+
+				axios.post(url, params).then((response) => {
+					let isSuccess = response.data.status == 'success' ? true : false
+					this.$emit('is-show-message', !isSuccess, response.data.message)
+				}).catch((error) => {
+					if (error.response) {
+						console.log(error.response.data);
+						console.log(error.response.status);
+						console.log(error.response.headers);
+					} else {
+						console.log('Error', error.message);
+					}
+					this.$emit('is-show-message', true, '發生意外錯誤!')
+				})
+			}
+			
+		}
 	},
 }
 </script>

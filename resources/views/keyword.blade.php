@@ -81,7 +81,7 @@
                     </h2>
                     <div style="text-align:right">
                         <input type="button" id="btn_insert" class="btn btn-primary" @click="getAddKeyWord()" value="新增" />
-                        <input type="button" id="btn_delete" class="btn btn-primary" @click="deleteKeyWord(urlData.delete)" value="刪除" />
+                        <input type="button" id="btn_delete" class="btn btn-primary" @click="deleteKeyWord()" value="刪除" />
                     </div><br/>
                     <keyword 
                         :key-word-data="keyword" 
@@ -94,7 +94,8 @@
                         @close="showEdit = false" 
                         :title="editTitle"
                         :is-add="isAdd"
-                        :url-data="urlData"
+                        :url-add="urlAdd"
+                        :url-update="urlUpdate"
                         :params="params"
                         @send-data="sendData"
                         @is-show-message="isShowMessage"
