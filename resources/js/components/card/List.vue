@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import CardSelect from "./CardSelect.vue"
+import CardSelect from "./Select.vue"
 
 export default {
 	components: {

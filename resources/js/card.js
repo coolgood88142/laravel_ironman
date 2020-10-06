@@ -1,12 +1,12 @@
 import "bootstrap/dist/css/bootstrap.css"
-import CardList from "./components/card/CardList.vue"
-import CardMessage from "./components/card/CardMessage.vue"
+import cardList from "./components/card/List.vue"
+import cardMessage from "./components/card/Message.vue"
 
 let app = new Vue({
     el: "#app",
     components: {
-        "card-list": CardList,
-        "card-message": CardMessage
+        "card-list": cardList,
+        "card-message": cardMessage
     },
     data: {
         title: "卡片狀態",

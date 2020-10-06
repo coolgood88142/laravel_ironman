@@ -6,15 +6,15 @@
 	<body>
 		<div id="app">
 			@{{ message }}
-			<city-counties 
-				@change-counties="updateDistricts" 
-				:counties-selected="countiesSelected"
-				:counties-data="{{ json_encode($counties) }}"
+			<city-county 
+				@change-county="updateCounty" 
+				:county-selected="countySelected"
+				:county-data="{{ json_encode($county) }}"
 			>
-			</city-counties>
+			</city-county>
 			<city-districts 
-				@change-districts="getDistrictsData" 
-				:counties-selected-text="countiesSelectedText" 
+				@change-districts="updateDistricts" 
+				:county-selected="countySelected" 
 				:districts-selected="districtsSelected" 
 				:districts-data="{{ json_encode($districts) }}" 
 			/>

@@ -29,7 +29,7 @@
 								</div>
 								<div class="form-check form-check-inline">
 									<input type="button" class="btn btn-primary" id="save" name="save"
-											value="儲存" @click="addKeyWord()">
+											value="儲存" @click="saveKeyWord()">
 									</div>
 							</slot>
 						</div>
@@ -76,7 +76,7 @@ export default {
 	},
 	methods: {
 		checkKeyWord(enName, chName) {
-			let isError = true
+			let isSuccess = false
 			this.messageText = ''
 			
 			if (enName === '' && chName === '') {
@@ -91,32 +91,35 @@ export default {
 				this.messageText = "中文名稱不能輸入英文"
 			} 
 
-			if (this.messageText != '') {
-				this.$emit('is-show-message', true, this.messageText)
+			if (this.messageText == '') {
+				isSuccess = true
 			} else {
-				isError = false
+				this.$emit('is-show-message', isSuccess, this.messageText)
 			}
-			return false
+			return isSuccess
 		},
-		addKeyWord(){
+		saveKeyWord(){
 			let enName = this.enName
 			let chName = this.chName
 			let url = this.isAdd ? this.urlAdd : this.urlUpdate
-			let isError = this.isErrorKeyWord(enName, chName)
+			let isSuccess = this.checkKeyWord(enName, chName)
 
-			if (!isError) {
-				let params = {
+			if (isSuccess) {
+				let data = {
 					'english_name' : enName,
 					'chinese_name' : chName,
 				}
 
 				if (!this.isAdd) {
-					params['id'] = this.params.id
+					data['id'] = this.params.id
 				}
 
-				axios.post(url, params).then((response) => {
+				axios.post(url, data).then((response) => {
 					let isSuccess = response.data.status == 'success' ? true : false
-					this.$emit('is-show-message', !isSuccess, response.data.message)
+					if (isSuccess && !this.isAdd) {
+						this.$emit('update-keyword-data', data)
+					}
+					this.$emit('is-show-message', isSuccess, response.data.message)
 				}).catch((error) => {
 					if (error.response) {
 						console.log(error.response.data);
@@ -125,7 +128,7 @@ export default {
 					} else {
 						console.log('Error', error.message);
 					}
-					this.$emit('is-show-message', true, '發生意外錯誤!')
+					this.$emit('is-show-message', false, '發生意外錯誤!')
 				})
 			}
 			

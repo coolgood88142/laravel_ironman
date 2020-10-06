@@ -3,7 +3,6 @@
 		<thead>
 			<tr>
 				<th></th>
-				<th>序號</th>
 				<th>英文名稱</th>
 				<th>中文名稱</th>
 				<th>建立日期</th>
@@ -13,7 +12,6 @@
 		<tbody>
 			<tr v-for="(keyword, index) in keyWordData" :key="index">
 				<td><input type="checkbox" name="id[]" :value="keyword._id" v-model="keywordID"></td>
-				<td>{{ index }}</td>
 				<td>{{ keyword.english_name }}</td>
 				<td>{{ keyword.chinese_name }}</td>
 				<td>{{ keyword.created_at.substring(0,10) }}</td>

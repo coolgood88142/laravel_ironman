@@ -11,7 +11,7 @@ class CityController extends Controller
     {
         $city = Config::get('city');
         $cityData = [
-            'counties' => $city['counties'],
+            'county' => $city['county'],
             'districts' => $city['districts']
         ];
 

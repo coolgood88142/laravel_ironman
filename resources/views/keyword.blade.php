@@ -83,12 +83,12 @@
                         <input type="button" id="btn_insert" class="btn btn-primary" @click="getAddKeyWord()" value="新增" />
                         <input type="button" id="btn_delete" class="btn btn-primary" @click="deleteKeyWord()" value="刪除" />
                     </div><br/>
-                    <keyword 
+                    <keyword-list
                         :key-word-data="keyword" 
                         @update-keyword="updateKeyWord"
                         @send-keyword-id="getKeyWordId"
                     >
-                    </keyword>
+                    </keyword-list>
                     <keyword-edit 
                         v-if="showEdit" 
                         @close="showEdit = false" 
@@ -97,7 +97,7 @@
                         :url-add="urlAdd"
                         :url-update="urlUpdate"
                         :params="params"
-                        @send-data="sendData"
+                        @update-keyword-data="updateKeywordData"
                         @is-show-message="isShowMessage"
                         
                     >
@@ -105,7 +105,7 @@
                     <navbar-pagination 
                         @change-pagination="getPagination" 
                         :pagination-data="pagination"
-                        >
+                    >
                     </navbar-pagination>
                 </form>
             </div>

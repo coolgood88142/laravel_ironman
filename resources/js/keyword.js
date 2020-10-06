@@ -1,12 +1,12 @@
 import 'bootstrap/dist/css/bootstrap.css'
-import keyword from './components/keyword/Keyword.vue';
-import keywordEdit from './components/keyword/KeywordEdit.vue';
+import keywordList from './components/keyword/List.vue';
+import keywordEdit from './components/keyword/Edit.vue';
 import NavbarPagination from './components/NavbarPagination.vue'
 
 let app = new Vue({
     el: '#app',
     components: {
-        'keyword': keyword,
+        'keyword-list': keywordList,
         'keyword-edit': keywordEdit,
         'navbar-pagination': NavbarPagination
     },
@@ -26,13 +26,14 @@ let app = new Vue({
             'id': '',
             'enName': '',
             'chName': ''
-        }
+        },
+        keyWordDataIndex: null
     },
     mounted: function () {
         this.getKeyWordData(1)
     },
     methods: {
-        getPagination: function (getPage){
+        getPagination(getPage) {
             this.getKeyWordData(getPage)
         },
         getKeyWordData(page){
@@ -56,7 +57,7 @@ let app = new Vue({
                 
             })
         },
-        getAddKeyWord(){
+        getAddKeyWord() {
             this.editTitle = '新增關鍵字'
             this.showEdit = true
             this.isAdd = true
@@ -66,20 +67,26 @@ let app = new Vue({
                 'chName': ''
             }
         },
-        updateKeyWord(id, enName, chName, index){
+        updateKeyWord(id, enName, chName, index) {
             this.editTitle = '更新關鍵字'
             this.showEdit = true
             this.params = {
                 'id': id,
                 'enName': enName,
-                'chName': chName,
-                'index' : index
+                'chName': chName
             }
+            this.keyWordDataIndex = index
         },
-        getKeyWordId(id){
+        getKeyWordId(id) {
             this.keyWordId = id
         },
-        deleteKeyWord(){
+        updateKeywordData(params) {
+            if (this.keyWordDataIndex != null) {
+                this.keyword[this.keyWordDataIndex].chinese_name = params.chinese_name
+                this.keyword[this.keyWordDataIndex].english_name = params.english_name
+            }
+        },
+        deleteKeyWord() {
             if (this.keyWordId.length > 0) {
                 let params = {
                     id: this.keyWordId
@@ -87,7 +94,7 @@ let app = new Vue({
                 if (this.urlDelete  != '') {
                     axios.post(this.urlDelete, params).then((response) => {
                         let isSuccess = response.data.status == 'success' ? true : false
-                        this.isShowMessage(!isSuccess, response.data.message)
+                        this.isShowMessage(isSuccess, response.data.message)
                     }).catch((error) => {
                         if (error.response) {
                             console.log(error.response.data);
@@ -96,28 +103,31 @@ let app = new Vue({
                         } else {
                             console.log('Error', error.message);
                         }
-                        this.isShowMessage(true, '發生意外錯誤!')
+                        this.isShowMessage(false, '發生意外錯誤!')
                     })
                 } else {
-                    this.isShowMessage(true, '發生意外錯誤!')
+                    this.isShowMessage(false, '發生意外錯誤!')
                 }
             } else {
-                this.isShowMessage(true, '至少勾選一個關鍵字')
+                this.isShowMessage(false, '至少勾選一個關鍵字')
             }
         },
-        isShowMessage(isError, message){
+        isShowMessage(isSuccess, message){
+            let isAdd =  this.isAdd
             swal({
                 title: message,
                 confirmButtonColor: "#e6b930",
-                icon: !isError ? 'success':'error',
+                icon: isSuccess ? 'success':'error',
                 showCloseButton: true
             }).then(function() {
-                if (!isError && isAdd){
+                if (isSuccess && isAdd){
                     location.reload()
-                } else if (isAdd){
-
                 }
             })
+
+            if (isSuccess) {
+                this.showEdit = false
+            }
         }
     },
     

@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import CardAddData from "./CardAddData.vue"
+import CardAddData from "./AddData.vue"
 import swal from "sweetalert"
 
 export default {

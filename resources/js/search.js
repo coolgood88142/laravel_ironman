@@ -1,10 +1,10 @@
 import 'bootstrap/dist/css/bootstrap.css'
-import FuzzySearch from './components/search/FuzzySearch.vue';
+import Fuzzy from './components/search/Fuzzy.vue';
 
 let app = new Vue({
     el: '#app',
     components: {
-        'fuzzy-search': FuzzySearch
+        'fuzzy-search': Fuzzy
     },
     data: {
         title: '模糊查詢',
