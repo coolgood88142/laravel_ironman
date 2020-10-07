@@ -1,26 +1,26 @@
 import 'bootstrap/dist/css/bootstrap.css'
-import cityCounty from './components/city/County.vue';
-import cityDistricts from './components/city/Districts.vue';
+import countiesCity from './components/counties/City.vue';
+import countiesDistricts from './components/counties/Districts.vue';
 
 let app = new Vue({
     el: '#app',
     data: {
         message: 'Vue練習:',
         showText: '顯示郵遞區號!',
-        countySelected: null,
+        citySelected: null,
         districtsSelected: null,
-        countySelectedText: '',
+        citySelectedText: '',
         districtsSelectedText: '',
         btnStyle: 'btn btn-primary'
     },
     components: {
-        'city-county': cityCounty,
-        'city-districts': cityDistricts
+        'counties-city': countiesCity,
+        'counties-districts': countiesDistricts
     },
     methods: {
-        updateCounty(CountySelectedText, CountySelected) {
-            this.countySelectedText = CountySelectedText
-            this.countySelected = CountySelected
+        updateCity(CitySelectedText, CitySelected) {
+            this.citySelectedText = CitySelectedText
+            this.citySelected = CitySelected
             this.districtsSelected = null
         },
         updateDistricts(DistrictsSelectedText, DistrictsSelected) {
@@ -29,8 +29,8 @@ let app = new Vue({
         },
         showPostalCode() {
             let show_text = '請選擇縣市和市區'
-            if (this.countySelectedText != '' && this.districtsSelectedText != '' && this.districtsSelected != null) {
-                show_text = this.countySelectedText + " " + this.districtsSelectedText + " 郵遞區號為：" + this.districtsSelected 
+            if (this.citySelectedText != '' && this.districtsSelectedText != '' && this.districtsSelected != null) {
+                show_text = this.citySelectedText + " " + this.districtsSelectedText + " 郵遞區號為：" + this.districtsSelected 
             }
             alert(show_text)
         }

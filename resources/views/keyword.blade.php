@@ -81,12 +81,12 @@
                     </h2>
                     <div style="text-align:right">
                         <input type="button" id="btn_insert" class="btn btn-primary" @click="getAddKeyWord()" value="新增" />
-                        <input type="button" id="btn_delete" class="btn btn-primary" @click="deleteKeyWord()" value="刪除" />
                     </div><br/>
                     <keyword-list
                         :key-word-data="keyword" 
-                        @update-keyword="updateKeyWord"
-                        @send-keyword-id="getKeyWordId"
+                        :url-delete="urlDelete"
+                        @update-keyword="updateKeyword"
+                        @delete-keyword-data="deleteKeywordData"
                     >
                     </keyword-list>
                     <keyword-edit 

@@ -8,7 +8,7 @@
 <script>
 export default {
 	props: {
-		countySelected: {
+		citySelected: {
 			type:Number
 		},
 		districtsData: {
@@ -20,9 +20,9 @@ export default {
 	},
 	computed: {
 		districtsArray() {
-			if (this.countySelected != null ) {
+			if (this.citySelected != null ) {
 				this.districtsValue = this.districtsSelected
-				return this.districtsData[this.countySelected];
+				return this.districtsData[this.citySelected];
 			}
 		}
 	},

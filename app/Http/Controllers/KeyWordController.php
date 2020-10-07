@@ -94,14 +94,12 @@ class KeyWordController extends Controller
     }
 
     public function deleteKeyWordData(Request $request){
-        $english_name = $request->english_name;
-        $chinese_name = $request->chinese_name;
         $datetime = Carbon::now()->toDateTimeString();
         $status = 'success';
         $message = '刪除成功!';
 
         try {
-            KeyWord::whereIn('_id', $request->id)->delete();
+            KeyWord::where('_id', $request->id)->delete();
         } catch (Exception $e) {
             $status = 'error';
             $message = '刪除失敗!';

@@ -19,7 +19,6 @@ let app = new Vue({
         urlAdd: '',
         urlUpdate: '',
         urlDelete: '',
-        keyWordId: [],
         pagination: {},
         getPage:1,
         params: {
@@ -67,7 +66,7 @@ let app = new Vue({
                 'chName': ''
             }
         },
-        updateKeyWord(id, enName, chName, index) {
+        updateKeyword(id, enName, chName, index) {
             this.editTitle = '更新關鍵字'
             this.showEdit = true
             this.params = {
@@ -77,39 +76,16 @@ let app = new Vue({
             }
             this.keyWordDataIndex = index
         },
-        getKeyWordId(id) {
-            this.keyWordId = id
-        },
         updateKeywordData(params) {
             if (this.keyWordDataIndex != null) {
                 this.keyword[this.keyWordDataIndex].chinese_name = params.chinese_name
                 this.keyword[this.keyWordDataIndex].english_name = params.english_name
             }
         },
-        deleteKeyWord() {
-            if (this.keyWordId.length > 0) {
-                let params = {
-                    id: this.keyWordId
-                }
-                if (this.urlDelete  != '') {
-                    axios.post(this.urlDelete, params).then((response) => {
-                        let isSuccess = response.data.status == 'success' ? true : false
-                        this.isShowMessage(isSuccess, response.data.message)
-                    }).catch((error) => {
-                        if (error.response) {
-                            console.log(error.response.data);
-                            console.log(error.response.status);
-                            console.log(error.response.headers);
-                        } else {
-                            console.log('Error', error.message);
-                        }
-                        this.isShowMessage(false, '發生意外錯誤!')
-                    })
-                } else {
-                    this.isShowMessage(false, '發生意外錯誤!')
-                }
-            } else {
-                this.isShowMessage(false, '至少勾選一個關鍵字')
+        deleteKeywordData(index) {
+            this.keyWordDataIndex = index
+            if (this.keyWordDataIndex != null) {
+                this.keyword.splice(this.keyWordDataIndex, 1)
             }
         },
         isShowMessage(isSuccess, message){

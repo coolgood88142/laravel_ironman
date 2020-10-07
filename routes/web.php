@@ -27,7 +27,7 @@ Route::get('/search', function () {
     return view('search');
 });
 
-Route::get('/city', 'CityController@getCityData');
+Route::get('/counties', 'CountiesController@getCountiesData');
 
 Route::get('/keyword', 'KeyWordController@getKeyWordView')->name('getKeyWordView');
 

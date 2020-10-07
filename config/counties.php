@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'county' => [
+    'city' => [
         ['text' => '臺北市', 'value' => 0 ],
         ['text' => '基隆市', 'value' => 1 ],
         ['text' => '新北市', 'value' => 2 ],

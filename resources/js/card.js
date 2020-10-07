@@ -9,7 +9,6 @@ let app = new Vue({
         "card-message": cardMessage
     },
     data: {
-        title: "卡片狀態",
         items: [
             {
                 name: "apple",

@@ -13,7 +13,7 @@ const mix = require('laravel-mix');
 
 mix.js('resources/js/app.js', 'public/js')
    .js('resources/js/card.js', 'public/js')
-   .js('resources/js/city.js', 'public/js')
+   .js('resources/js/counties.js', 'public/js')
    .js('resources/js/route.js', 'public/js')
    .js('resources/js/search.js', 'public/js')
    .js('resources/js/keyword.js', 'public/js')
