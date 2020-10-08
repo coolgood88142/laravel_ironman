@@ -1,4 +1,3 @@
-import 'bootstrap/dist/css/bootstrap.css'
 import Fuzzy from './components/search/Fuzzy.vue';
 
 let app = new Vue({
@@ -6,8 +5,4 @@ let app = new Vue({
     components: {
         'fuzzy-search': Fuzzy
     },
-    data: {
-        title: '模糊查詢',
-    },
-    
 })

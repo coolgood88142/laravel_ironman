@@ -2,8 +2,7 @@
 	<div id="channel_list">
 		<div class="form-group">
 			<label>搜尋使用者名稱</label>
-			<vSelect v-model="seleted" label="name" :options="searchData"
-				:filterable="false" @search="onSearch" @input="selectedData">
+			<vSelect v-model="seleted" label="name" :options="searchData" @input="selectedData">
 				<span slot="no-options">
 					查無資料!
 				</span>
@@ -39,18 +38,16 @@ export default {
 			btnSelect: 'btn btn-primary',
 			url: `https://jsonplaceholder.typicode.com/users`,
 			seleted: '',
-			searchData: [],
 			showData: []
 		}
 	},
-	watch:{
-		showData(newVal){
+	computed:{
+		searchData() {
 			let searchArray = []
-			this.showData = newVal
-			_.findKey(newVal, function(e, key) {
+			_.findKey(this.showData, function(e, key) {
 				searchArray.push(e.username)
 			})
-			this.searchData = searchArray
+			return searchArray
 		}
 	},
 	mounted() {
@@ -79,16 +76,6 @@ export default {
 				this.getApiData(this.url+`?username=${this.seleted}`)
 			}
 		},
-		onSearch(search, loading) {
-			if(search != ''){
-				loading(true)
-				this.search(loading, search, this)
-			}
-		},
-		search: _.debounce((loading, search, vm) => {
-			this.getApiData(this.url+`?username=${search}`)
-			loading(false)
-		}, 350)
 	},
 }
 </script>

@@ -6,19 +6,19 @@
 	<body>
 		<div id="app">
 			@{{ message }}
-			<counties-city
+			<country-city
 				@change-city="updateCity" 
-				:city-selected="citySelected"
+				:city-selected="city.selected"
 				:city-data="{{ json_encode($city) }}"
 			>
-			</counties-city>
-			<counties-districts 
+			</country-city>
+			<country-districts 
 				@change-districts="updateDistricts" 
-				:city-selected="citySelected" 
-				:districts-selected="districtsSelected" 
+				:city-selected="city.selected" 
+				:districts-selected="districts.selected" 
 				:districts-data="{{ json_encode($districts) }}" 
 			/>
-			</counties-districts>
+			</country-districts>
 			<input 
 				type="button" 
 				id="show" 
@@ -28,6 +28,7 @@
 			/>
 		</div>
 		<script src="{{mix('js/app.js')}}"></script>
-		<script src="{{mix('js/counties.js')}}"></script>
+		<script src="{{mix('js/country.js')}}"></script>
+		<link rel="stylesheet" type="text/css" href="{{mix('/css/app.css')}}">
 	</body>
 </html>

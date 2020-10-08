@@ -3,18 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Config;
 
 class CardController extends Controller
 {
     public function getCardData()
     {
-        $title = '卡片狀態';
-        // $data = {
-        //     'name': 'apple'
-        // };
-
-        return view('counties', [
-            'title' => $title
-        ]);
+        $card = Config::get('card');
+        
+        return [
+            'items' => $card['items'],
+            'cardItems' => $card['cardItems'],
+        ];
     }
 }

@@ -1,4 +1,3 @@
-import 'bootstrap/dist/css/bootstrap.css'
 import keywordList from './components/keyword/List.vue';
 import keywordEdit from './components/keyword/Edit.vue';
 import NavbarPagination from './components/NavbarPagination.vue'

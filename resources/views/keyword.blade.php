@@ -112,5 +112,6 @@
         </div>
         <script src="{{mix('js/app.js')}}"></script>
         <script src="{{mix('js/keyword.js')}}"></script>
+        <link rel="stylesheet" type="text/css" href="{{mix('/css/app.css')}}">
     </body>
 </html>

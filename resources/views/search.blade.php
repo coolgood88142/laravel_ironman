@@ -13,7 +13,7 @@
                         id="title" 
                         class="text-center text-black font-weight-bold" 
                         style="margin-bottom:20px;">
-                    @{{ title }}
+                    模糊查詢
                     </h2>
                     <fuzzy-search></fuzzy-search>
                 </form>
@@ -21,6 +21,7 @@
         </div>
         <script src="{{mix('js/app.js')}}"></script>
         <script src="{{mix('js/search.js')}}"></script>
+        <link rel="stylesheet" type="text/css" href="{{mix('/css/app.css')}}">
     </body>
 
 </html>

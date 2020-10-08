@@ -27,7 +27,7 @@ Route::get('/search', function () {
     return view('search');
 });
 
-Route::get('/counties', 'CountiesController@getCountiesData');
+Route::get('/country', 'CountryController@getCountryData');
 
 Route::get('/keyword', 'KeyWordController@getKeyWordView')->name('getKeyWordView');
 
@@ -40,3 +40,5 @@ Route::post('/addKeyWord', 'KeyWordController@addKeyWordData')->name('addKeyWord
 Route::post('/updateKeyWord', 'KeyWordController@updateKeyWordData')->name('updateKeyWord');
 
 Route::post('/deleteKeyWord', 'KeyWordController@deleteKeyWordData')->name('deleteKeyWord');
+
+Route::post('/card', 'CardController@getCardData');
