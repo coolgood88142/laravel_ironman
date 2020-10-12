@@ -70,11 +70,11 @@
 export default {
 	data() {
 		return {
-			cardName: "",
-			card1: "",
-			card2: "",
-			card3: "",
-			card4: "",
+			cardName: '',
+			card1: '',
+			card2: '',
+			card3: '',
+			card4: '',
 		}
 	},
 	computed: {
@@ -89,27 +89,27 @@ export default {
 	},
 	methods: {
 		checkCardData() {
-			let message = ""
+			let message = ''
 			const data = this.cardData
-			if (data.cardName === "") {
-				message = "信用卡名稱不能為空"
+			if (data.cardName === '') {
+				message = '信用卡名稱不能為空'
 			} else if (data.full.length < 19) {
-				message = "卡號請輸入16碼數字"
+				message = '卡號請輸入16碼數字'
 			} else if (/[A-Za-z\u4e00-\u9fa5]/.test(data.full)) {
-				message = "卡號不能輸入中英文"
+				message = '卡號不能輸入中英文'
 			}
 
-			if (message === "") {
-				const cardNum = _.split(data.full, "-")
+			if (message === '') {
+				const cardNum = _.split(data.full, '-')
 				_.forEach(cardNum, (value) => {
 					if (value.length !== 4) {
-						message = "每個卡號區間請輸入4碼數字"
+						message = '每個卡號區間請輸入4碼數字'
 						return
 					}
 				})
 			}
 
-			this.$emit("send-card", message, data)
+			this.$emit('send-card', message, data)
 		},
 	},
 }

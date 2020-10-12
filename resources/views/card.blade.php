@@ -84,7 +84,7 @@
                                     <div class="col">
                                         <small v-if="card.isUseCard" class="text-danger">卡片正使用中!</small>
                                         <input type="button" v-else class="btn btn-primary" id="delete" name="delete"
-                                            value="刪除" v-on:click="deleteCard(index)">
+                                            value="刪除" v-on:click="deleteCardData(index)">
                                     </div>
                                 </div>
                             </div>
@@ -92,7 +92,7 @@
                     </div>
                 </div>
             </div>
-            <card-list v-for="(item, index) in items" :item="item" :index="index" :key="item.id"
+            <card-list v-for="(item, index) in items" :item="item" :product-index="index" :key="item.id"
                 :card-data="cardItems" @save-new-card="saveCardData"></card-list>
             <card-message v-if="showErrorMessage" @close="showErrorMessage = false" :message="errorMessageText"></card-message>
         </div>

@@ -17,7 +17,7 @@
 								:value="editText" @click="changeCard()"/>
 						</div>
 					</div>
-					<card-select :is-show="isShow" :card-data="cardData" :card-index="index"
+					<card-select :is-show="isShow" :card-data="cardData" :product-index="productIndex"
 						:card-selected="cardSelected" @save-card="saveCard"></card-select>
 					<input type="button" :class="isStatus ? btnDanger : btnSuccess"
 						:disabled="isDisabled" :value="isStatus ? dangerText : successText"
@@ -29,11 +29,11 @@
 </template>
 
 <script>
-import CardSelect from "./Select.vue"
+import CardSelect from './Select.vue'
 
 export default {
 	components: {
-		"card-select": CardSelect
+		'card-select': CardSelect
 	},
 	props: {
 		item: {
@@ -44,22 +44,22 @@ export default {
 			type:Array
 		},
 
-		index: {
+		productIndex: {
 			type:Number
 		},
 	},
 	data() {
 		return {
 			selectItem: this.item,
-			btnSuccess: "btn btn-success",
-			btnDanger: "btn btn-danger",
-			btnEdit: "btn btn-primary",
-			successText: "啟用",
-			dangerText: "停止",
-			editText: "編輯",
+			btnSuccess: 'btn btn-success',
+			btnDanger: 'btn btn-danger',
+			btnEdit: 'btn btn-primary',
+			successText: '啟用',
+			dangerText: '停止',
+			editText: '編輯',
 			isShow: false,
-			isStatus: this.item.status === "1",
-			messageText: "",
+			isStatus: this.item.status == '1',
+			messageText: '',
 			isDisabled: false,
 		}
 	},
@@ -78,10 +78,10 @@ export default {
 				return key == item.card
 			})
 
-			let name = (key === undefined || key === null) ? "" : itemData[key].cardName
+			let name = (key === undefined || key === null) ? '' : itemData[key].cardName
 
-			if (name === "") {
-				name = "未綁卡"
+			if (name === '') {
+				name = '未綁卡'
 				this.isDisabled = true
 			}
 
@@ -95,29 +95,20 @@ export default {
 				return key == item.card 
 			})
 			
-			const selected = (key === undefined || key === null) ? "" : itemData[key].last
+			const selected = (key === undefined || key === null) ? '' : itemData[key].last
 
 			return selected
 		},
 	},
 	methods: {
 		changeStatus(status) {
-			if (status === "0") {
-				this.item.status = "1"
+			if (status === '0') {
+				this.item.status = '1'
 				this.isStatus = true
 			} else {
-				this.item.status = "0"
+				this.item.status = '0'
 				this.isStatus = false
 			}
-		},
-		getCardItem() {
-			const itemData = this.itemData
-			const item = this.item
-			_.mapKeys(itemData, (card, cardkey) => {
-				if (item.card === cardkey) {
-					return itemData[cardkey]
-				}
-			})
 		},
 		changeCard() {
 			if (this.isShow) {
@@ -129,14 +120,14 @@ export default {
 		saveCard(isAdd, CardObj) {
 			this.isShow = false
 			if (!isAdd) {
-				let key = ""
+				let key = ''
 				_.mapKeys(CardObj, (card, cardkey) => {
 					key = cardkey
 				})
 
 				this.selectItem.card = key
 			} else {
-				this.$emit("save-new-card", CardObj, this.index)
+				this.$emit('save-new-card', CardObj, this.productIndex)
 			}
 		},
 	},

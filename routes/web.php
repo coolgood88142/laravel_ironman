@@ -29,9 +29,9 @@ Route::get('/search', function () {
 
 Route::get('/country', 'CountryController@getCountryData');
 
-Route::get('/keyword', 'KeyWordController@getKeyWordView')->name('getKeyWordView');
+Route::get('/keyword', 'KeyWordController@getKeyWordView');
 
-Route::get('/getKeyWordData','KeyWordController@index')->name('getKeyWordData');
+Route::get('/getKeyWordData','KeyWordController@index');
 
 Route::get('/updateKeyWord', 'KeyWordController@updateKeyWordData');
 

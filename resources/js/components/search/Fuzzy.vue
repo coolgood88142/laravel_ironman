@@ -30,9 +30,11 @@
 <script>
 import 'vue-select/dist/vue-select.css'
 import vSelect from 'vue-select'
-Vue.component('vSelect', vSelect)
 
 export default {
+	components: {
+		'vSelect': vSelect
+	},
 	data() {
 		return {
 			btnSelect: 'btn btn-primary',

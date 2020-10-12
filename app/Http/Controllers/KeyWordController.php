@@ -36,11 +36,6 @@ class KeyWordController extends Controller
         return response()->json($response);
     }
 
-    public function checkKeyWordData(Request $request){
-        $english_name = $request->english_name;
-        $chinese_name = $request->chinese_name;
-    }
-
     public function addKeyWordData(Request $request)
     {
         $english_name = $request->english_name;

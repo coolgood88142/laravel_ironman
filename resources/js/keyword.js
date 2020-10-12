@@ -10,7 +10,6 @@ let app = new Vue({
         'navbar-pagination': NavbarPagination
     },
     data: {
-        title: '關鍵字查詢',
         editTitle: '',
         showEdit: false,
         isAdd: false,
@@ -27,7 +26,7 @@ let app = new Vue({
         },
         keyWordDataIndex: null
     },
-    mounted: function () {
+    mounted() {
         this.getKeyWordData(1)
     },
     methods: {

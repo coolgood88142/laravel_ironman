@@ -15,7 +15,7 @@
                         style="margin-bottom:20px;">
                     模糊查詢
                     </h2>
-                    <fuzzy-search></fuzzy-search>
+                    <search-fuzzy></search-fuzzy>
                 </form>
             </div>
         </div>

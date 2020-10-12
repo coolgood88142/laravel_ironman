@@ -77,7 +77,7 @@
                         id="title" 
                         class="text-center text-black font-weight-bold" 
                         style="margin-bottom:20px;">
-                    @{{ title }}
+                    關鍵字查詢
                     </h2>
                     <div style="text-align:right">
                         <input type="button" id="btn_insert" class="btn btn-primary" @click="getAddKeyWord()" value="新增" />
@@ -112,6 +112,6 @@
         </div>
         <script src="{{mix('js/app.js')}}"></script>
         <script src="{{mix('js/keyword.js')}}"></script>
-        <link rel="stylesheet" type="text/css" href="{{mix('/css/app.css')}}">
+        <link rel="stylesheet" type="text/css" href={{mix('css/app.css')}}>
     </body>
 </html>

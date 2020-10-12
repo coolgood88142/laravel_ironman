@@ -33,8 +33,8 @@
 </template>
 
 <script>
-import CardAddData from "./AddData.vue"
-import swal from "sweetalert"
+import CardAddData from './AddData.vue'
+import swal from 'sweetalert'
 
 export default {
     components:{
@@ -45,23 +45,22 @@ export default {
             type:Array
         },
 
-        cardIndex:{
-            type:Number
-        },
-
         cardSelected:{
             type:String
         },
 
         isShow:{
             type:Boolean
-        }
+        },
+
+        productIndex:{
+            type:Number
+        },
     },
     data:function(){
         return {
              'cardLastData' : '',
-             'selectedData' : '',
-             'sendId' : 'send' + this.cardIndex,
+             'sendId' : 'send' + this.productIndex,
              'selected' : this.cardSelected,
              'btnSuccess' : 'btn btn-success',
              'btnDanger' : 'btn btn-danger',
@@ -86,7 +85,7 @@ export default {
         
         cardIndexData(){
             let cardIdArray = []
-            let cardName = 'cardname' + this.cardIndex + "_"
+            let cardName = 'cardname' + this.productIndex + '_'
             let length = this.cardData.length
             this.cardLastData = cardName + length
             for (let i = 0; i < length; i++) {
@@ -94,25 +93,24 @@ export default {
                 cardIdArray.push(id)
             }
             return  cardIdArray
-        }
-    },
-    watch:{
-        selected(newVal, oldVal){
+        },
+
+        selectedData(){
             let obj = 'add'
-            let cardData = this.cardData
-             _.forEach(cardData, function (value, key) {
+            let selected = this.selected
+             _.forEach(this.cardData, function (value, key) {
                 _.mapKeys(value, function(card, cardkey){
                     let cardLast = value[cardkey].last
-
-                    if(newVal == cardLast){
+                    if(selected == cardLast){
                         obj = value
                         return
                     }
                 })
             })
-            
-            this.selectedData = obj
-        },
+            return obj
+        }
+    },
+    watch:{
         isShow(newVal, oldVal){
             if(newVal == true){
                 this.selected = this.cardSelected
@@ -157,7 +155,7 @@ export default {
             if(this.messageText != ''){
                 swal({
                     title: this.messageText,
-                    confirmButtonColor: "#e6b930",
+                    confirmButtonColor: '#e6b930',
                     icon: !isError ? 'success':'error',
                     showCloseButton: true
                 })

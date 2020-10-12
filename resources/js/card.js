@@ -66,7 +66,7 @@ let app = new Vue({
             this.cardItems[length] = itenObj
             this.items[index].card = id
         },
-        deleteCard(index) {
+        deleteCardData(index) {
             try {
                 this.cardData.splice(index, 1)
                 this.cardItems.splice(index, 1)
