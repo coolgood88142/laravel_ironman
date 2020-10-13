@@ -29,16 +29,18 @@ Route::get('/search', function () {
 
 Route::get('/country', 'CountryController@getCountryData');
 
-Route::get('/keyword', 'KeyWordController@getKeyWordView');
+Route::get('/keyword', 'KeywordController@getKeywordView');
 
-Route::get('/getKeyWordData','KeyWordController@index');
+Route::get('/keywordSelect', 'KeywordController@updateKeywordData');
 
-Route::get('/updateKeyWord', 'KeyWordController@updateKeyWordData');
+Route::get('/getKeywordData','KeywordController@index')->name('getKeywordData');
 
-Route::post('/addKeyWord', 'KeyWordController@addKeyWordData')->name('addKeyWord');
+Route::get('/updateKeyword', 'KeywordController@updateKeywordData');
 
-Route::post('/updateKeyWord', 'KeyWordController@updateKeyWordData')->name('updateKeyWord');
+Route::post('/addKeyword', 'KeywordController@addKeywordData')->name('addKeyword');
 
-Route::post('/deleteKeyWord', 'KeyWordController@deleteKeyWordData')->name('deleteKeyWord');
+Route::post('/updateKeyword', 'KeywordController@updateKeywordData')->name('updateKeyword');
+
+Route::post('/deleteKeyword', 'KeywordController@deleteKeywordData')->name('deleteKeyword');
 
 Route::post('/card', 'CardController@getCardData');

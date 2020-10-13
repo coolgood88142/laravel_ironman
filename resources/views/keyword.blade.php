@@ -80,10 +80,10 @@
                     關鍵字查詢
                     </h2>
                     <div style="text-align:right">
-                        <input type="button" id="btn_insert" class="btn btn-primary" @click="getAddKeyWord()" value="新增" />
+                        <input type="button" id="btn_insert" class="btn btn-primary" @click="getAddKeyword()" value="新增" />
                     </div><br/>
                     <keyword-list
-                        :key-word-data="keyword" 
+                        :keyword-data="keyword" 
                         :url-delete="urlDelete"
                         @update-keyword="updateKeyword"
                         @delete-keyword-data="deleteKeywordData"

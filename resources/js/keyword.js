@@ -21,20 +21,20 @@ let app = new Vue({
         getPage:1,
         params: {
             'id': '',
-            'enName': '',
-            'chName': ''
+            'en': '',
+            'tc': ''
         },
-        keyWordDataIndex: null
+        keywordDataIndex: null
     },
     mounted() {
-        this.getKeyWordData(1)
+        this.getKeywordData(1)
     },
     methods: {
         getPagination(getPage) {
-            this.getKeyWordData(getPage)
+            this.getKeywordData(getPage)
         },
-        getKeyWordData(page){
-            axios.get('/getKeyWordData?page=' + page).then(response => {
+        getKeywordData(page){
+            axios.get('/getKeywordData?page=' + page).then(response => {
                 this.keyword = response.data.keyword,
                 this.urlAdd = response.data.add,
                 this.urlUpdate = response.data.update,
@@ -54,36 +54,36 @@ let app = new Vue({
                 
             })
         },
-        getAddKeyWord() {
+        getAddKeyword() {
             this.editTitle = '新增關鍵字'
             this.showEdit = true
             this.isAdd = true
             this.params = {
                 'id': '',
-                'enName': '',
-                'chName': ''
+                'en': '',
+                'tc': ''
             }
         },
-        updateKeyword(id, enName, chName, index) {
+        updateKeyword(id, en, tc, index) {
             this.editTitle = '更新關鍵字'
             this.showEdit = true
             this.params = {
                 'id': id,
-                'enName': enName,
-                'chName': chName
+                'en': en,
+                'tc': tc
             }
-            this.keyWordDataIndex = index
+            this.keywordDataIndex = index
         },
         updateKeywordData(params) {
-            if (this.keyWordDataIndex != null) {
-                this.keyword[this.keyWordDataIndex].chinese_name = params.chinese_name
-                this.keyword[this.keyWordDataIndex].english_name = params.english_name
+            if (this.keywordDataIndex != null) {
+                this.keyword[this.keywordDataIndex].tc = params.tc
+                this.keyword[this.keywordDataIndex].en = params.en
             }
         },
         deleteKeywordData(index) {
-            this.keyWordDataIndex = index
-            if (this.keyWordDataIndex != null) {
-                this.keyword.splice(this.keyWordDataIndex, 1)
+            this.keywordDataIndex = index
+            if (this.keywordDataIndex != null) {
+                this.keyword.splice(this.keywordDataIndex, 1)
             }
         },
         isShowMessage(isSuccess, message){

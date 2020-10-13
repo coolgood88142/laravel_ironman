@@ -9,12 +9,12 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr v-for="(keyword, index) in keyWordData" :key="index">
-				<td>{{ keyword.english_name }}</td>
-				<td>{{ keyword.chinese_name }}</td>
+			<tr v-for="(keyword, index) in keywordData" :key="index">
+				<td>{{ keyword.en }}</td>
+				<td>{{ keyword.tc }}</td>
 				<td>{{ keyword.created_at.substring(0,10) }}</td>
 				<td>
-					<input type="button" class="btn btn-primary" value="編輯" @click="$emit('update-keyword', keyword._id, keyword.english_name, keyword.chinese_name, index)" />
+					<input type="button" class="btn btn-primary" value="編輯" @click="$emit('update-keyword', keyword._id, keyword.en, keyword.tc, index)" />
 					<input type="button" class="btn btn-primary" value="刪除" @click="deleteKeyword(keyword._id, index)" />
 				</td>
 			</tr>
@@ -25,7 +25,7 @@
 <script>
 export default {
 	props: {
-		keyWordData: {
+		keywordData: {
 			type:Array
 		},
 		urlDelete: {

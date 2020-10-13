@@ -16,8 +16,8 @@
 									<input type="text" class="form-control" id="inputEnglishName" v-model="enName">
 								</div>
 								<div class="form-group">
-									<label for="inputChineseName">中文名稱</label>
-									<input type="text" class="form-control" id="inputChineseName" v-model="chName">
+									<label for="inputTraditionalChineseName">中文名稱</label>
+									<input type="text" class="form-control" id="inputTraditionalChineseName" v-model="tcName">
 								</div>
 							</slot>
 						</div>
@@ -29,7 +29,7 @@
 								</div>
 								<div class="form-check form-check-inline">
 									<input type="button" class="btn btn-primary" id="save" name="save"
-											value="儲存" @click="saveKeyWord()">
+											value="儲存" @click="saveKeyword()">
 									</div>
 							</slot>
 						</div>
@@ -69,25 +69,25 @@ export default {
 	},
 	data() {
 		return {
-			enName: this.params.enName,
-			chName: this.params.chName,
+			enName: this.params.en,
+			tcName: this.params.tc,
 			messageText: '',
 		}
 	},
 	methods: {
-		checkKeyWord(enName, chName) {
+		checkKeyword(enName, tcName) {
 			let isSuccess = false
 			this.messageText = ''
 			
-			if (enName === '' && chName === '') {
+			if (enName === '' && tcName === '') {
 				this.messageText = "英文或中文名稱不能為空"
 			} else if (enName === '') {
 				this.messageText = "英文名稱不能為空"
 			} else if(/[\u4e00-\u9fa5]/.test(enName)) {
 				this.messageText = "英文名稱不能輸入中文"
-			} else if (chName === '') {
+			} else if (tcName === '') {
 				this.messageText = "中文名稱不能為空"
-			} else if(/[A-Za-z]/.test(chName)) {
+			} else if(/[A-Za-z]/.test(tcName)) {
 				this.messageText = "中文名稱不能輸入英文"
 			} 
 
@@ -98,16 +98,16 @@ export default {
 			}
 			return isSuccess
 		},
-		saveKeyWord(){
+		saveKeyword(){
 			let enName = this.enName
-			let chName = this.chName
+			let tcName = this.tcName
 			let url = this.isAdd ? this.urlAdd : this.urlUpdate
-			let isSuccess = this.checkKeyWord(enName, chName)
+			let isSuccess = this.checkKeyword(enName, tcName)
 
 			if (isSuccess) {
 				let data = {
-					'english_name' : enName,
-					'chinese_name' : chName,
+					'en' : enName,
+					'tc' : tcName,
 				}
 
 				if (!this.isAdd) {
