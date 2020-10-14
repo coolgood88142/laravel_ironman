@@ -31,9 +31,7 @@ Route::get('/country', 'CountryController@getCountryData');
 
 Route::get('/keyword', 'KeywordController@getKeywordView');
 
-Route::get('/keywordSelect', 'KeywordController@updateKeywordData');
-
-Route::get('/getKeywordData','KeywordController@index')->name('getKeywordData');
+Route::get('/getKeywordData','KeywordController@getKeywordData')->name('getKeywordData');
 
 Route::get('/updateKeyword', 'KeywordController@updateKeywordData');
 

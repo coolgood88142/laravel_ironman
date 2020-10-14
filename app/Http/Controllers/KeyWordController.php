@@ -14,7 +14,7 @@ class KeywordController extends Controller
         return view('keyword');
     }
 
-    public function index(Request $request){
+    public function getKeywordData(Request $request){
         $perPage = 5;
         $page = (int)$request->page;
         $from= ($page * $perPage) - ($perPage - 1) - 1;
@@ -63,8 +63,7 @@ class KeywordController extends Controller
                 'updated_at' => $datetime
             ]);
         } catch (Exception $e) {
-            $status = 'error';
-            $message = '新增失敗!';
+            echo $e;
         }
         
         return [ 

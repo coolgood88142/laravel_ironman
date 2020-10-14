@@ -128,7 +128,12 @@ export default {
 					} else {
 						console.log('Error', error.message);
 					}
-					this.$emit('is-show-message', false, '發生意外錯誤!')
+
+					let ErrorMessage = '新增失敗!'
+					if (!this.isAdd) {
+						ErrorMessage = '更新失敗!'
+					}
+					this.$emit('is-show-message', false, ErrorMessage)
 				})
 			}
 			

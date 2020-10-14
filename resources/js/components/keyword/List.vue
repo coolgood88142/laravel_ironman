@@ -49,7 +49,7 @@ export default {
 				if (isSuccess) {
 					this.$emit('delete-keyword-data', index)
 				}
-                this.isShowMessage(isSuccess, response.data.message)
+				this.$emit('is-show-message', isSuccess, response.data.message)
             }).catch((error) => {
                 if (error.response) {
                     console.log(error.response.data);
@@ -58,7 +58,7 @@ export default {
                 } else {
                 	console.log('Error', error.message);
                 }
-                this.$emit('is-show-message', false, '發生意外錯誤!')
+                this.$emit('is-show-message', false, '刪除失敗!')
             })
 		}
 	}
