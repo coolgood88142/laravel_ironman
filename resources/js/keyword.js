@@ -2,6 +2,8 @@ import keywordList from './components/keyword/List.vue';
 import keywordEdit from './components/keyword/Edit.vue';
 import NavbarPagination from './components/NavbarPagination.vue'
 
+let data = JSON.parse(document.getElementById('data').value);
+
 let app = new Vue({
     el: '#app',
     components: {
@@ -13,11 +15,11 @@ let app = new Vue({
         editTitle: '',
         showEdit: false,
         isAdd: false,
-        keyword: [],
-        urlAdd: '',
-        urlUpdate: '',
-        urlDelete: '',
-        pagination: {},
+        keyword: data.keyword,
+        urlAdd: data.add,
+        urlUpdate: data.update,
+        urlDelete: data.delete,
+        pagination: data.pagination,
         getPage:1,
         params: {
             'id': '',
@@ -26,19 +28,10 @@ let app = new Vue({
         },
         keywordDataIndex: null
     },
-    mounted() {
-        this.getKeywordData(1)
-    },
     methods: {
-        getPagination(getPage) {
-            this.getKeywordData(getPage)
-        },
-        getKeywordData(page){
-            axios.get('/getKeywordData?page=' + page).then(response => {
+        getPagination(page){
+            axios.get('/getPagination?page=' + page).then(response => {
                 this.keyword = response.data.keyword,
-                this.urlAdd = response.data.add,
-                this.urlUpdate = response.data.update,
-                this.urlDelete = response.data.delete,
                 this.pagination = response.data.pagination
             }).catch((error) => {
                 //顯示請求資料失敗的錯誤訊息

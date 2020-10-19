@@ -11,26 +11,50 @@ use Carbon\Carbon;
 class KeywordController extends Controller
 {
     public function getKeywordView(){
-        return view('keyword');
-    }
-
-    public function getKeywordData(Request $request){
-        $perPage = 5;
-        $page = (int)$request->page;
-        $from= ($page * $perPage) - ($perPage - 1) - 1;
-        $keyword = Keyword::all()->splice($from, $perPage);
-        $total = Keyword::count();
+        $pagination = $this->getPaginationData(1);
+        $from = $pagination['from'];
+        $perPage = $pagination['perPage'];
+        $keyword = $this->getKeywordData($from, $perPage);
         $response = [
-            'pagination' => [
-                'total' => $total,
-                'per_page' => $perPage,
-                'current_page' => $page,
-                'last_page' => ceil($total / $perPage),
-                'from' => $from,
-                'to' => $page * $perPage
-            ],
+            'pagination' => $pagination,
             'keyword' => $keyword, 'add' => route('addKeyword'), 'update' => route('updateKeyword'),
             'delete' => route('deleteKeyword')
+        ];
+
+        return view('keyword', ['data' => $response]);
+    }
+
+    public function getKeywordData($from, $perPage){
+        $keyword = Keyword::all()->splice($from, $perPage);
+        return $keyword;
+    }
+
+    public function getPaginationData($page){
+        $perPage = 5;
+        $from= ($page * $perPage) - ($perPage - 1) - 1;
+        $total = Keyword::count();
+        $pagination = [
+            'total' => $total,
+            'per_page' => $perPage,
+            'current_page' => $page,
+            'last_page' => ceil($total / $perPage),
+            'from' => $from,
+            'to' => $page * $perPage,
+            'perPage' => $perPage
+        ];
+        return $pagination;
+    }
+
+    public function getPagination(Request $request){
+        $page = (int)$request->page;
+        $pagination = $this->getPaginationData($page);
+        $from = $pagination['from'];
+        $perPage = $pagination['perPage'];
+        $keyword = $this->getKeywordData($from, $perPage);
+
+        $response = [
+            'pagination' => $pagination,
+            'keyword' => $keyword
         ];
 
         return response()->json($response);
@@ -56,12 +80,11 @@ class KeywordController extends Controller
         $message = '新增成功!';
 
         try {
-            Keyword::insert([
-                'en' => $en, 
-                'tc' => $tc,
-                'created_at' => $datetime,
-                'updated_at' => $datetime
-            ]);
+            $keyword = new Keyword();
+            $keyword->en = $en;
+            $keyword->tc = $tc;
+            $keyword->created_at = $datetime;
+            $keyword->updated_at = $datetime;
         } catch (Exception $e) {
             echo $e;
         }
@@ -91,7 +114,11 @@ class KeywordController extends Controller
             $check = $this->checkKeywordData($id);
 
             if ($check) {
-                Keyword::where('_id', $id)->update($data);
+                $keyword = Keyword::find($id);
+                $keyword->en = $en;
+                $keyword->tc = $tc;
+                $keyword->updated_at = $datetime;
+                $keyword->save();
             } else {
                 $status = 'error';
                 $message = '更新失敗!';
@@ -117,7 +144,8 @@ class KeywordController extends Controller
             $check = $this->checkKeywordData($id);
 
             if ($check) {
-                Keyword::where('_id', $id)->delete();
+                $keyword = Keyword::find($id);
+                $keyword->delete();
             } else {
                 $status = 'error';
                 $message = '刪除失敗!';

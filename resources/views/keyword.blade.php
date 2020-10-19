@@ -108,6 +108,7 @@
                     >
                     </navbar-pagination>
                 </form>
+                <input type="hidden" id="data" value="{{ json_encode($data) }}">
             </div>
         </div>
         <script src="{{mix('js/app.js')}}"></script>
