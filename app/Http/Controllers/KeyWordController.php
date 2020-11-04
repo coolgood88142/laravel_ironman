@@ -75,7 +75,7 @@ class KeywordController extends Controller
     {
         $en = $request->en;
         $tc = $request->tc;
-        $datetime = Carbon::now()->toDateTimeString();
+        $datetime = Carbon::now();
         $status = 'success';
         $message = '新增成功!';
 
@@ -84,7 +84,8 @@ class KeywordController extends Controller
             $keyword->en = $en;
             $keyword->tc = $tc;
             $keyword->created_at = $datetime;
-            $keyword->updated_at = $datetime;
+            $keyword->updated_at = new Date();
+            $keyword->save();
         } catch (Exception $e) {
             echo $e;
         }
@@ -99,16 +100,9 @@ class KeywordController extends Controller
         $id = $request->id;
         $en = $request->en;
         $tc = $request->tc;
-        $datetime = Carbon::now()->toDateTimeString();
+        $datetime = Carbon::now();
         $status = 'success';
         $message = '更新成功!';
-
-        $data = [
-            'en' => $en,
-            'tc' => $tc,
-            'updated_at' => $datetime
-        ];
-        
 
         try {
             $check = $this->checkKeywordData($id);
@@ -136,7 +130,6 @@ class KeywordController extends Controller
 
     public function deleteKeywordData(Request $request){
         $id = $request->id;
-        $datetime = Carbon::now()->toDateTimeString();
         $status = 'success';
         $message = '刪除成功!';
 
