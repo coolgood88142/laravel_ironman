@@ -33,8 +33,6 @@ Route::get('/keyword', 'KeywordController@getKeywordView');
 
 Route::get('/getPagination','KeywordController@getPagination')->name('getPagination');
 
-Route::get('/updateKeyword', 'KeywordController@updateKeywordData');
-
 Route::post('/addKeyword', 'KeywordController@addKeywordData')->name('addKeyword');
 
 Route::post('/updateKeyword', 'KeywordController@updateKeywordData')->name('updateKeyword');
@@ -42,3 +40,9 @@ Route::post('/updateKeyword', 'KeywordController@updateKeywordData')->name('upda
 Route::post('/deleteKeyword', 'KeywordController@deleteKeywordData')->name('deleteKeyword');
 
 Route::post('/card', 'CardController@getCardData');
+
+Route::post('/addArticle', 'ArticleController@addArticleData')->name('addArticle');
+
+Route::post('/updateArticle', 'ArticleController@updateArticleData')->name('updateArticle');
+
+Route::post('/deleteArticle', 'ArticleController@deleteArticleData')->name('deleteArticle');

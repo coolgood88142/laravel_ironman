@@ -6,18 +6,18 @@
 					<form action="" method="POST" class="sidebar-form">
 						<div class="modal-header">
 							<slot name="header">
-								<h3>{{ title }}</h3>
+								<h3>{{ typeTitle }}</h3>
 							</slot>
 						</div>
 						<div class="modal-body">
 							<slot name="body">
 								<div class="form-group">
 									<label for="inputEnglishName">英文名稱</label>
-									<input type="text" class="form-control" id="inputEnglishName" v-model="enName">
+									<input type="text" class="form-control" id="inputEnglishName" v-model="title">
 								</div>
 								<div class="form-group">
 									<label for="inputTraditionalChineseName">中文名稱</label>
-									<input type="text" class="form-control" id="inputTraditionalChineseName" v-model="tcName">
+									<input type="text" class="form-control" id="inputTraditionalChineseName" v-model="context">
 								</div>
 							</slot>
 						</div>
@@ -29,7 +29,7 @@
 								</div>
 								<div class="form-check form-check-inline">
 									<input type="button" class="btn btn-primary" id="save" name="save"
-											value="儲存" @click="saveKeyword()">
+											value="儲存" @click="saveTitles()">
 									</div>
 							</slot>
 						</div>
@@ -50,6 +50,17 @@
 import swal from "sweetalert"
 
 export default {
+    props:{
+        typeTitle: {
+			type:String
+        },
+        urlAdd: {
+			type:String
+		},
+		urlUpdate: {
+			type:String
+		},
+    },
 	data() {
 		return {
 			messageText: ''
@@ -74,16 +85,16 @@ export default {
 			}
 			return isSuccess
 		},
-		saveKeyword(){
-			let enName = this.enName
-			let tcName = this.tcName
+		saveTitles(){
+			let title = this.title
+			let context = this.context
 			let url = this.isAdd ? this.urlAdd : this.urlUpdate
-			let isSuccess = this.checkKeyword(enName, tcName)
+			let isSuccess = this.checkTitles(title, context)
 
 			if (isSuccess) {
 				let data = {
-					'en' : enName,
-					'tc' : tcName,
+					'title' : title,
+					'context' : context,
 				}
 
 				if (!this.isAdd) {
@@ -93,9 +104,9 @@ export default {
 				axios.post(url, data).then((response) => {
 					let isSuccess = response.data.status == 'success' ? true : false
 					if (isSuccess && !this.isAdd) {
-						this.$emit('update-keyword-data', data)
+						this.$emit('update-title-data', data)
 					}
-					this.$emit('is-show-message', isSuccess, response.data.message)
+					this.$emit('is-show-title', isSuccess, response.data.message)
 				}).catch((error) => {
 					if (error.response) {
 						console.log(error.response.data);
@@ -109,7 +120,7 @@ export default {
 					if (!this.isAdd) {
 						ErrorMessage = '更新失敗!'
 					}
-					this.$emit('is-show-message', false, ErrorMessage)
+					this.$emit('is-show-title', false, ErrorMessage)
 				})
 			}
 			
