@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Jenssegers\Mongodb\Eloquent\Model;
 
-class Article extends Model
+class Articles extends Model
 {
     protected $collection = 'articles';
     public $timestamps = false;

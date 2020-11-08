@@ -27,6 +27,10 @@ Route::get('/search', function () {
     return view('search');
 });
 
+Route::get('/articles', function () {
+    return view('articles');
+});
+
 Route::get('/country', 'CountryController@getCountryData');
 
 Route::get('/keyword', 'KeywordController@getKeywordView');

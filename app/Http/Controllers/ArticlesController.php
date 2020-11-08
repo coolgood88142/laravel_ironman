@@ -13,6 +13,7 @@ class ArticlesController extends Controller
 
     public function getArticlesData(){
         $articles = Articles::all();
+        $url = '`https://my-json-server.typicode.com/coolgood88142/json_server/titles`';
         return $articles;
     }
 
