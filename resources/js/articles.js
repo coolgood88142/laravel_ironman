@@ -92,12 +92,15 @@ let app = new Vue({
                 'slug': slug
             }
             this.articlesDataIndex = index
+            this.isAdd = false
         },
         updateArticlesData(params) {
             if (this.articlesDataIndex != null) {
                 this.articles[this.articlesDataIndex].title = params.title
                 this.articles[this.articlesDataIndex].content = params.content
                 this.articles[this.articlesDataIndex].slug = params.slug
+            }else{
+                this.articles[params.id-1] = params
             }
         },
         deleteArticlesData(index) {
@@ -107,16 +110,11 @@ let app = new Vue({
             }
         },
         isShowMessage(isSuccess, message){
-            let isAdd =  this.isAdd
             swal({
                 title: message,
                 confirmButtonColor: "#e6b930",
                 icon: isSuccess ? 'success':'error',
                 showCloseButton: true
-            }).then(function() {
-                if (isSuccess && isAdd){
-                    location.reload()
-                }
             })
 
             if (isSuccess) {

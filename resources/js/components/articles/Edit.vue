@@ -104,28 +104,21 @@ export default {
 			let slug = this.slug
 			let isSuccess = this.checkArticles(title, content, slug)
 
-			// if (isSuccess) {
+			if (isSuccess) {
 				let data = {
 					'title': title,
 					'content': content,
 					'slug': slug
 				}
 
-				// let data = new FormData();
-				// data.append('title', title)
-				// data.append('content', content)
-				// data.append('slug', slug)
-
 				let headers = {
 					'Content-Type': 'application/json'
 				}
 
 				if (this.isAdd) {
-					data['id'] = 6
-					console.log(data)
 					axios.post(this.url, data, headers).then((response) => {
-						console.log(response)
-						// this.$emit('update-articles-data', response.data)
+						this.$emit('update-articles-data', response.data)
+						this.$emit('is-show-message', isSuccess, '新增成功!')
 					}).catch((error) => {
 						if (error.response) {
 							console.log(error.response.data);
@@ -134,6 +127,21 @@ export default {
 						} else {
 							console.log('Error', error.message);
 						}
+						this.$emit('is-show-message', false, '新增失敗!')
+					})
+				} else {
+					axios.patch(this.url+'/'+this.params.id, data, headers).then((response) => {
+						this.$emit('update-articles-data', response.data)
+						this.$emit('is-show-message', isSuccess, '更新成功!')
+					}).catch((error) => {
+						if (error.response) {
+							console.log(error.response.data);
+							console.log(error.response.status);
+							console.log(error.response.headers);
+						} else {
+							console.log('Error', error.message);
+						}
+						this.$emit('is-show-message', false, '新增失敗!')
 					})
 				}
 
@@ -158,7 +166,7 @@ export default {
 				// 	}
 				// 	this.$emit('is-show-title', false, ErrorMessage)
 				// })
-			// }
+			}
 			
 		}
 	},

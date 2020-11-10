@@ -54,7 +54,7 @@ export default {
                 id: id
 			}
 			
-			axios.delete(url, params).then((response) => {
+			axios.delete(url+"/"+params.id).then((response) => {
 				response => (
                     this.showData = response.data
                 )
