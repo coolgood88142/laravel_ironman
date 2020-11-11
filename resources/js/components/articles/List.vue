@@ -54,15 +54,9 @@ export default {
                 id: id
 			}
 			
-			axios.delete(url+"/"+params.id).then((response) => {
-				response => (
-                    this.showData = response.data
-                )
-				let isSuccess = response.data.status == 'success' ? true : false
-				if (isSuccess) {
-					this.$emit('delete-keyword-data', index)
-				}
-				this.$emit('is-show-message', isSuccess, response.data.message)
+			axios.delete(url+"/"+id).then((response) => {
+				this.$emit('delete-articles-data', index),
+				this.$emit('is-show-message', true, '刪除成功!')
             }).catch((error) => {
                 if (error.response) {
                     console.log(error.response.data);

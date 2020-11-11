@@ -141,31 +141,9 @@ export default {
 						} else {
 							console.log('Error', error.message);
 						}
-						this.$emit('is-show-message', false, '新增失敗!')
+						this.$emit('is-show-message', false, '更新失敗!')
 					})
 				}
-
-				// axios.post(url, data).then((response) => {
-				// 	let isSuccess = response.data.status == 'success' ? true : false
-				// 	if (isSuccess && !this.isAdd) {
-				// 		this.$emit('update-title-data', data)
-				// 	}
-				// 	this.$emit('is-show-title', isSuccess, response.data.message)
-				// }).catch((error) => {
-				// 	if (error.response) {
-				// 		console.log(error.response.data);
-				// 		console.log(error.response.status);
-				// 		console.log(error.response.headers);
-				// 	} else {
-				// 		console.log('Error', error.message);
-				// 	}
-
-				// 	let ErrorMessage = '新增失敗!'
-				// 	if (!this.isAdd) {
-				// 		ErrorMessage = '更新失敗!'
-				// 	}
-				// 	this.$emit('is-show-title', false, ErrorMessage)
-				// })
 			}
 			
 		}

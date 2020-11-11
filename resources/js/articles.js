@@ -101,6 +101,7 @@ let app = new Vue({
                 this.articles[this.articlesDataIndex].slug = params.slug
             }else{
                 this.articles[params.id-1] = params
+                this.articlesDataIndex = params.id-1
             }
         },
         deleteArticlesData(index) {
