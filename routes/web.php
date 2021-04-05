@@ -50,3 +50,18 @@ Route::post('/addArticle', 'ArticleController@addArticleData')->name('addArticle
 Route::post('/updateArticle', 'ArticleController@updateArticleData')->name('updateArticle');
 
 Route::post('/deleteArticle', 'ArticleController@deleteArticleData')->name('deleteArticle');
+
+Route::get('/test1','KeywordController@test1');
+
+Route::get('/test2','KeywordController@test2');
+
+Route::get('/test3','KeywordController@test3');
+
+Route::post('/test3','KeywordController@test3');
+
+Route::get('/cache','KeywordController@cache');
+
+Route::get('/api', function () {
+    return view('api');
+});
+
