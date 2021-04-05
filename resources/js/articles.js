@@ -100,7 +100,7 @@ let app = new Vue({
                 this.articles[this.articlesDataIndex].content = params.content
                 this.articles[this.articlesDataIndex].slug = params.slug
             }else{
-                this.articles[params.id-1] = params
+                this.articles.push(params)
                 this.articlesDataIndex = params.id-1
             }
         },

@@ -130,7 +130,7 @@ export default {
 						this.$emit('is-show-message', false, '新增失敗!')
 					})
 				} else {
-					axios.patch(this.url+'/'+this.params.id, data, headers).then((response) => {
+					axios.put(this.url+'/'+this.params.id, data, headers).then((response) => {
 						this.$emit('update-articles-data', response.data)
 						this.$emit('is-show-message', isSuccess, '更新成功!')
 					}).catch((error) => {
@@ -143,6 +143,22 @@ export default {
 						}
 						this.$emit('is-show-message', false, '更新失敗!')
 					})
+
+					// let data = {name: 'test'}
+					// 針對data 
+					// axios.patch(this.url+'/'+this.params.id, data, headers).then((response) => {
+					// 	this.$emit('update-articles-data', response.data)
+					// 	this.$emit('is-show-message', isSuccess, '更新成功!')
+					// }).catch((error) => {
+					// 	if (error.response) {
+					// 		console.log(error.response.data);
+					// 		console.log(error.response.status);
+					// 		console.log(error.response.headers);
+					// 	} else {
+					// 		console.log('Error', error.message);
+					// 	}
+					// 	this.$emit('is-show-message', false, '更新失敗!')
+					// })
 				}
 			}
 			

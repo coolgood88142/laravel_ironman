@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Keyword;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\LazyCollection;
 use Illuminate\Pagination\Paginator;
 use Carbon\Carbon;
+use Cache;
 
 class KeywordController extends Controller
 {
@@ -152,6 +154,46 @@ class KeywordController extends Controller
             'status' => $status,
             'message' => $message
         ];
+    }
+
+    public function test1(){
+        $datas = Keyword::all();
+
+        foreach ($datas as $data) {
+            echo $data;
+        }
+    }
+
+    public function test2(){
+        $datas = Keyword::cursor();
+
+        foreach ($datas as $data) {
+            echo $data;
+        }
+    }
+
+    public function test3(){
+        $articles = LazyCollection ::make(function() {
+            $url = 'https://my-json-server.typicode.com/coolgood88142/json_server/articles';
+            $handle = fopen($url, 'r');
+
+            while ($line = fgets($handle)) {
+                yield $line;
+            }
+        });
+
+        foreach ($articles as $line) {
+            echo $line . '<br/>';
+        }
+    }
+
+    public function cache(){
+        \DB::enableQueryLog();
+        // Keyword::all();
+        $value = Cache::remember('keyword', 180, function () {
+            return Keyword::all();
+        });
+        dd(\DB::getQueryLog());
     }
 
 }

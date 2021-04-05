@@ -12,6 +12,7 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
+   .js('resources/js/api.js', 'public/js')
    .js('resources/js/card.js', 'public/js')
    .js('resources/js/country.js', 'public/js')
    .js('resources/js/route.js', 'public/js')
